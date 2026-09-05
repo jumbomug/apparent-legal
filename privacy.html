@@ -14,158 +14,140 @@
   @media (prefers-color-scheme: dark) {
     body { color: #f2f3f5; background: #111317; }
     a { color: #7fb0ff; }
+    th, td { border-color: #3a3f47; }
   }
   h1 { font-size: 1.7rem; line-height: 1.25; margin-bottom: 0.25rem; }
   h2 { font-size: 1.15rem; margin-top: 2rem; }
+  h3 { font-size: 1rem; margin-top: 1.5rem; }
   .meta { opacity: 0.7; margin-top: 0; }
   ul { padding-left: 1.25rem; }
   li { margin: 0.4rem 0; }
   a { color: #2563eb; }
+  table { border-collapse: collapse; width: 100%; font-size: 0.92rem; margin: 1rem 0; display: block; overflow-x: auto; }
+  th, td { border: 1px solid #d5d8de; padding: 0.4rem 0.5rem; text-align: left; vertical-align: top; }
+  code { font-size: 0.9em; }
   footer { margin-top: 3rem; font-size: 0.85rem; opacity: 0.7; }
 </style>
 </head>
 <body>
 <h1>Apparent Family — Privacy Policy</h1>
 <p class="meta"><strong>Effective date:</strong> September 4, 2026</p>
-
-<p>Apparent Family (&ldquo;Apparent,&rdquo; &ldquo;we,&rdquo; &ldquo;us&rdquo;) is a family app that helps a parent or
-caretaker set a child&rsquo;s daily tasks, and helps the child complete them and earn
-rewards, across their two devices. This policy explains what we collect, why, and
-your choices. We built Apparent to collect as little as possible.</p>
-
+<p>Apparent Family ("Apparent," "we," "us") is a family app that helps a parent or caretaker set a child's daily tasks, and helps the child complete them and earn rewards, across their two devices. This policy explains what we collect, why, and your choices. We built Apparent to collect as little as possible.</p>
 <h2>Who provides the information</h2>
-<p>A <strong>parent or caretaker</strong> creates the account and enters the household and child
-details. A <strong>child</strong> uses a linked device that a parent connects with a
-short-lived invite code; the child does not create their own account and does not
-enter personal identifying information. Apparent is a parent-managed tool, not a
-service children sign up for on their own.</p>
-
+<p>A <strong>parent or caretaker</strong> creates the account and enters the household and child details. A <strong>child</strong> uses a linked device that a parent connects with a short-lived invite code. Claiming that parent-approved invite creates a pseudonymous Supabase authentication session for the device, but the child does not choose credentials or sign up independently. Children can complete tasks and may type a short task-submission note that is visible inside their family. The optional Settings feedback form is parent-only. Apparent is a parent-managed tool, not a service children sign up for on their own.</p>
 <h2>What we collect</h2>
 <p>We only collect what the app needs to work:</p>
 <ul>
-  <li><strong>Parent account:</strong> your email address, and — if you use Sign in with Apple —
-    the name and email (or Apple private-relay email) Apple provides. Used to
-    create and secure your account.</li>
-  <li><strong>Household setup:</strong> a household name you choose and the number of
-    parents/caretakers.</li>
-  <li><strong>Child profile:</strong> a display name you choose for the child and an <strong>age group</strong>
-    (for example &ldquo;elementary&rdquo;) — never an exact birthdate.</li>
-  <li><strong>Tasks and rewards:</strong> the responsibilities, routines, star values, rewards,
-    and completion history you create and track, including any short note a child
-    attaches when sending a task for a parent&rsquo;s review.</li>
-  <li><strong>School grades (optional):</strong> if a parent chooses to track them, the subject
-    names and short grade values the parent types in (for example &ldquo;Math: A-&rdquo;).
-    Grades are entered by the parent only, are visible only inside your family,
-    and are never used to gate rewards, never shared, and never read from any
-    school system. Removing a subject, a child, or your account removes them.</li>
-  <li><strong>Device connection:</strong> short-lived, single-use invite codes (stored only as a
-    hash) used to connect a child&rsquo;s device to your family.</li>
-  <li><strong>Crash reports:</strong> if the app hits an error, it records a short technical
-    description (the error message and code location, with any email-shaped text
-    removed) so we can fix it. Crash reports contain no names, no family content,
-    and are <strong>not linked to your account</strong>.</li>
-  <li><strong>Push token:</strong> a notification token so we can tell a parent when a child&rsquo;s
-    task is waiting for review.</li>
+  <li><strong>Parent account and sign-in:</strong> your email address, including an Apple private-relay email if you choose Sign in with Apple; an internal Supabase account identifier; and the sign-in provider associated with the account. If you use Sign in with Apple, Supabase also keeps the Apple subject identifier needed to link and verify that identity. If you use email and password, the password is sent to Supabase Auth for authentication; Apparent does not store the plaintext password in its family database, local app-data cache, or logs.</li>
+  <li><strong>Household setup:</strong> a household name you choose. Apparent does not ask you to report household size or a parent/caretaker count in the current setup flow.</li>
+  <li><strong>Child profile and preferences:</strong> a display name you choose for the child, an <strong>age group</strong> (for example "elementary") — never an exact birthdate — and the child's selected visual-theme identifier.</li>
+  <li><strong>Linked child-device session:</strong> after a parent-approved invite is claimed, Supabase creates a pseudonymous anonymous-auth user/session identifier and links it to the approved family and child profile. The child provides no email address or password for this session, and an anonymous session can never hold parent authority.</li>
+  <li><strong>Tasks and rewards:</strong> the responsibilities, routines, star values, rewards, and completion history you create and track — which tasks a child ticks off and when, the rewards they claim, and any short note a child attaches when sending a task for a parent's review.</li>
+  <li><strong>Help requests:</strong> when a child taps the Help button on their device, we record that the request happened and when, linked to the child's profile, so a parent can be told. There is no message and no free text — the button sends nothing a child types.</li>
+  <li><strong>School grades (optional):</strong> if a parent chooses to track them, the subject names and short grade values the parent types in (for example "Math: A-"). Grades are entered by the parent only, are visible only inside your family, and are never used to gate rewards, never shared with a school, and never read from any school system. Removing a subject, a child, or your account removes them from the active service.</li>
+  <li><strong>Device and caregiver connection:</strong> short-lived, single-use child-device and caregiver invite codes (stored only as hashes), together with the family, creator/claim, expiration, and status records needed to issue, validate, and retire those invites.</li>
+  <li><strong>Optional Screen Time gate status:</strong> whether a Daily Unlock's on-device gate is off, on, or needs attention. Apparent does not send the selected-app tokens, Screen Time selections, or app-activity/usage data to its servers; those stay on the child's device in Apple's Family Controls storage.</li>
+  <li><strong>Feedback and support (optional):</strong> if a signed-in parent sends a note from Settings, we collect the feedback type and message they choose to provide, together with the app version, build number, device platform, and submission timestamps. The note is linked to the parent's account so we can investigate, follow up, and improve Apparent. We do not attach a separate family identifier. Please do not include children's full names, contact details, grades, health information, passwords, invite codes, or other sensitive details that are not needed for the request.</li>
+  <li><strong>Error reports:</strong> if the app hits an error, the signed-in app may send the error type, a short technical message and code location/stack, app version and build, platform, capture time, and server receipt time so we can fix it. A narrow deterministic scrubber removes URL-, push-token-, JWT-, Supabase-key-, email-, UUID-, contextual invite-code-, and long opaque-token-shaped text on the device and again on the server. This is defense in depth, not a promise that arbitrary free text can identify every possible sensitive value. The report row does not contain an account, family, or device identifier, but the authenticated request and short-lived infrastructure logs can still be associated with the account that sent it.</li>
+  <li><strong>Parent notification device identifiers:</strong> a random installation identifier stored securely on the parent device, plus its notification token, so we can route an alert. Only a signed-in active parent can register; our server rejects child-device registration. The installation identifier lets the app request deactivation of that exact installation when the parent signs out. A random per-attempt identifier and a short-lived cancellation record prevent a registration that finishes late from reactivating a signed-out device. Those client-inaccessible cancellation records are purged after seven days by a daily job (schedule timing can add up to about one day), and account deletion removes them sooner. Each successful signed-in registration refresh renews a 90-day active lease; a daily job deactivates an unrefreshed registration and deletes its token after 30 more inactive days. A provider rejection can deactivate only the exact registration at the unchanged version captured for that notification. A refreshed registration wins, and an older delivery record with no trustworthy captured version cannot deactivate the current registration. These identifiers are not used for advertising or tracking.</li>
+  <li><strong>Network and security metadata:</strong> Supabase automatically records limited request and authentication metadata such as IP address, IP-derived approximate location, user agent or app-client information, request route and time, response status and timing, and — for authentication events — account identifier. We use this only to authenticate requests, prevent abuse, troubleshoot failures, and keep the service secure and reliable.</li>
 </ul>
-<p>We do <strong>not</strong> collect precise location, financial information, health data,
-contacts, browsing or search history, or biometric data. The camera is used
-<strong>only</strong> to scan a parent-provided invite QR code — no photos are taken or
-stored.</p>
-
+<p><strong>Identifiers from a child's device support internal operations only.</strong> The pseudonymous session identifier a linked child device holds, and the request records our infrastructure keeps about it, are used solely to operate, secure, maintain and troubleshoot the service. They are never used to contact the child, to build a profile, for advertising, or for any other purpose.</p>
+<p>Apparent does not request GPS location, financial or health information, contacts, or browsing or search history. For certain parent-only actions, Apparent invokes Apple's on-device authentication prompt, which can use Face ID, Touch ID, or the device passcode. Apple evaluates that credential on the device; Apparent receives only a local success, cancellation, or failure outcome and does not receive, store, or transmit a face/fingerprint template or the device passcode. Please do not add biometric or other sensitive details to optional free-text fields. If you do include them, they are handled as part of the note you submitted under the same access and retention rules described here. Our infrastructure may derive coarse location from an IP address for security logging; it is not used to track a person's movements. The camera is used <strong>only</strong> to scan a parent-provided invite QR code — no photos are taken or stored.</p>
 <h2>How we use it</h2>
 <ul>
-  <li>To provide the service: create and sync your family&rsquo;s tasks and rewards across
-    the parent and child devices.</li>
-  <li>To send a parent a push notification when a child submits a task for review.
-    Notifications contain only generic text (e.g. &ldquo;A task is ready for review&rdquo;) and
-    an identifier the app resolves after you open it — never a child&rsquo;s name or task
-    details.</li>
-  <li>To secure accounts and prevent abuse.</li>
+  <li>To provide the service: create and sync your family's tasks and rewards across the parent and child devices.</li>
+  <li>To send a parent a push notification when a child submits a task for review or another configured family action needs the parent. Notifications contain generic text and a minimal action type — never a child or family identifier, child's name, task details, grade, or note.</li>
+  <li>To personalize family labels, child themes, and age-appropriate starter tasks from the choices a parent or child makes, and to sync only the coarse state of an optional on-device Screen Time gate.</li>
+  <li>To respond to optional parent feedback, diagnose reported problems, and plan improvements to Apparent.</li>
+  <li>To secure accounts, prevent abuse, and keep the service reliable.</li>
 </ul>
-<p>We do <strong>not</strong> use your information for advertising, and we do <strong>not</strong> sell or
-rent it.</p>
-
+<p>We do <strong>not</strong> use your information for advertising, and we do <strong>not</strong> sell or rent it.</p>
 <h2>Tracking and analytics</h2>
-<p>Apparent contains <strong>no advertising, no third-party analytics, and no tracking
-SDKs.</strong> We do not track you or your family across other apps or websites.</p>
-
+<p>Apparent contains <strong>no advertising, no tracking SDKs, and no automatic behavioral analytics.</strong> We do not track you or your family across other apps or websites. We may review feedback a parent deliberately submits and privacy-scrubbed technical error reports to troubleshoot and improve Apparent. Reviewing those deliberately submitted notes is not automatic monitoring of in-app behavior.</p>
 <h2>Who we share it with</h2>
-<p>We share information only with the infrastructure providers that run the app, and
-only as needed to operate it:</p>
+<p>We share information only with infrastructure providers that run the app, and only as needed to operate it:</p>
 <ul>
-  <li><strong>Supabase</strong> — hosts our database, authentication, and secure sync.</li>
-  <li><strong>Expo (push notifications)</strong> — delivers the review-request notifications
-    described above.</li>
-  <li><strong>Apple</strong> — provides Sign in with Apple when you choose it.</li>
+  <li><strong>Supabase</strong> — hosts our database, authentication, secure sync, server functions, limited security logs, and scheduled feedback, diagnostic, push-attempt cancellation, push-receipt processing, and stale-notification- registration deletion.</li>
+  <li><strong>Resend</strong> — delivers the emails we send to a parent: account confirmation and recovery, the message confirming that you gave permission for a child's device (see Children's privacy), and the warning before an unused family is deleted. For those messages, Resend processes the recipient address, sender/domain metadata, full email subject and content, and delivery/security events. None of those emails names a child or carries anything a child's device sent. Resend also sends a generic alert to Apparent when new feedback is ready in Supabase; that alert contains <strong>no feedback text and no user, family, or feedback-record identifier</strong>.</li>
+  <li><strong>Expo Push Service and Apple Push Notification service (APNs)</strong> — receive a parent device's push token and the generic, identifier-free notification payload needed to deliver an alert. Apparent sets a short delivery lifetime; Expo clears delivery receipts after its documented 24-hour window.</li>
+  <li><strong>Apple</strong> — provides Sign in with Apple when you choose it; Apparent requests only the email scope, not your Apple profile name. Apple also provides the system authentication used for parent gates: Face ID, Touch ID, or the device passcode is evaluated on-device, while Apparent receives only the local outcome. Apple provides the on-device Family Controls framework when a family enables optional Screen Time gating. Selected-app tokens and activity data remain on the child's device.</li>
 </ul>
-<p>These providers process data on our behalf under their own terms; they are not
-permitted to use it for their own purposes. We do not share family data with
-anyone else.</p>
-
-<h2>Children&rsquo;s privacy</h2>
+<p>These providers process data on our behalf under their own terms. We do not share family data with advertisers, data brokers, or unrelated third parties. <strong>We never make any of it public.</strong> Nothing a child does in Apparent — no task, note, reward, help request or theme — is visible to anyone outside your family, and we do not disclose a child's information to any third party.</p>
+<h2>Children's privacy</h2>
 <p>Apparent is designed for parents to manage on behalf of their children:</p>
 <ul>
-  <li>A parent creates the account and provides the child&rsquo;s display name and age
-    group. Children do not create accounts or submit personal information directly.</li>
-  <li>We minimize children&rsquo;s data by design — an age <em>group</em>, not a birthdate, and no
-    photos, location, or contact data.</li>
-  <li>We do not use children&rsquo;s data for advertising, profiling, or tracking.</li>
+  <li>A parent creates the account and provides the child's display name and age group. A child does not choose account credentials or sign up independently; the device's pseudonymous anonymous-auth session is created only after a parent-approved, short-lived invite is claimed.</li>
+  <li>Child-entered task notes stay attached to a specific task submission and are visible only to the family. The general feedback form is not available to a child session, and the server rejects child feedback requests.</li>
+  <li>We minimize children's data by design — an age <em>group</em>, not a birthdate, and no profile photos, GPS or precise location, or contact data.</li>
+  <li>We do not use children's data for advertising, profiling, behavioral analytics, or tracking.</li>
 </ul>
-<p>If you believe a child&rsquo;s information has been provided to us in a way you did not
-intend, contact us at <a href="mailto:privacy@bear-audio.com">privacy@bear-audio.com</a> and we will delete it.</p>
-
+<p><strong>Before a child's device connects, we ask for your permission.</strong> The child side of Apparent is made for children, and we treat every child profile as a child under the Children's Online Privacy Protection Act whatever age group you choose. So, before any child device can connect:</p>
+<ul>
+  <li><strong>You read a notice, in the app, on the child's own screen.</strong> It lists what the device will send — which tasks are ticked off and when, an optional review note, rewards claimed, the theme chosen, Help-button taps, Daily Unlock gate status, and the device's own pseudonymous identifier — what we use it for, and that we share none of it outside Apparent Family. The notice links to this policy.</li>
+  <li><strong>You give permission from your signed-in parent account</strong>, by tapping "I agree". Only a family parent can do this; a caregiver cannot. Until you do, no connect code exists and nothing is collected from the child.</li>
+  <li><strong>We then email you to confirm.</strong> That message says what you agreed to and tells you how to take it back, so that a parent who did not give permission hears about it from us. If it cannot be delivered, the app tells you and offers to send it again. This is the "email plus" method of verifiable parental consent.</li>
+  <li><strong>If what the device sends ever changes materially</strong> — a new kind of information, or a new recipient — we show you a new notice and ask again before anything new is collected. Photo evidence is one such change: today the child device sends no photos, and it will not until you have been asked.</li>
+  <li><strong>You can withdraw at any time</strong> with <strong>Withdraw permission</strong> on the child's screen; see below.</li>
+</ul>
+<p>The operator responsible for this is <strong>Bear Audio LLC</strong>, at the address under Contact.</p>
+<p>If you believe a child's information has been provided to us in a way you did not intend, contact us at <a href="mailto:privacy@bear-audio.com">privacy@bear-audio.com</a> and we will delete it.</p>
+<h3>What you can do as a parent</h3>
+<p>You do not have to ask us for any of this. Each of it is a control in the app, on the child's own screen in <strong>Family</strong>:</p>
+<ul>
+  <li><strong>Review what we hold.</strong> Everything a child's device sends is shown on that child's screen — the tasks they ticked off and when, and any note they added to a task sent for review. There is nothing about your child that you cannot see there.</li>
+  <li><strong>Refuse any further collection, without losing anything.</strong> <strong>Withdraw permission</strong> takes back the consent you gave for that child: we stop collecting anything from them, and their device is disconnected if one is connected. It is available whether or not a device has ever been connected. <strong>Disconnect device</strong> is the narrower control — it releases the device the child is using without changing your permission, which is what you want when they simply switch devices. Nothing already recorded is deleted by either, so refusing collection does not cost your child their history or their stars. You can give permission again, or reconnect with a new code, whenever you like.</li>
+  <li><strong>Delete.</strong> Individual tasks, rewards and notes can be removed from that same screen. <strong>Settings → Delete account</strong> removes the whole family — children, tasks, rewards, grades, history and connected-device access — immediately and permanently.</li>
+  <li><strong>Ask us instead.</strong> If you would rather we did any of it, write to the address above and we will. We may need to confirm you are the parent on the account before acting, so that someone else cannot use this to reach your child's information.</li>
+</ul>
 <h2>How your data is protected</h2>
 <ul>
-  <li>Encrypted in transit (TLS).</li>
-  <li>Access is enforced on our servers with per-family, per-role rules — a device
-    can only reach the data its family and role allow.</li>
+  <li>App-to-server connections use HTTPS/TLS. Email delivery also uses provider transport protections, but transport after an email leaves our provider can depend on the recipient's mail system.</li>
+  <li>Access is enforced on our servers with per-family, per-role rules — a device can only reach the data its family and role allow.</li>
+  <li>Parent capabilities require a permanent, non-anonymous parent account. Parent-approved anonymous sessions are reserved for linked child devices and cannot create families or hold active parent membership.</li>
   <li>The on-device cache is encrypted.</li>
+  <li>Feedback can be submitted only by an active parent account, is rate-limited, and cannot be read directly by an app client.</li>
+  <li>The feedback limit is five submissions per account in a rolling hour. The diagnostic limit is 20 reports per account in a fixed hour. A separate, short-lived account counter enforces the diagnostic limit but is not copied to the stored report; diagnostic report rows contain no account, family, or device identifier.</li>
 </ul>
-
 <h2>Retention and deletion</h2>
-<p>You control your data. From the app&rsquo;s <strong>Settings → Delete account</strong>, you can
-permanently delete your account and <strong>all</strong> associated family data — children,
-tasks, rewards, history, and connected-device access — at any time. This is
-immediate and irreversible.</p>
-
-<p>We also delete on a schedule, so data does not sit with us longer than it is
-useful:</p>
-<ul>
-  <li><strong>A child&rsquo;s note on a task submission:</strong> deleted after 90 days.
-    It explains one submission at the moment a parent reviews it, so it is kept for
-    far less time than the task record. The task and its status history remain &mdash;
-    only the child-written text is removed.</li>
-  <li><strong>A child&rsquo;s task and reward activity:</strong> deleted after 24 months.
-    That covers two school years, so year-over-year views stay whole.</li>
-  <li><strong>A whole family nobody has used for 12 months:</strong> deleted in full,
-    including its children, tasks, rewards, grades, history and connected-device
-    access. About a month beforehand we try to email you, so keeping the account
-    only takes opening the app. We say &ldquo;try&rdquo; deliberately: email is filtered
-    and forwarded by services we do not control, and we have seen our own notices
-    land in spam. So that message is an attempt to reach you rather than a
-    guarantee, and the deletion does not wait for it &mdash; if it did, an address that
-    no longer works would keep a child&rsquo;s data here indefinitely, which is the
-    opposite of what this schedule is for.</li>
-</ul>
-
+<p>This is our written retention schedule. Each row says why we keep the information, for how long, and what deletes it sooner. The paragraphs after the table say the same things in more detail.</p>
+<table>
+<thead><tr><th>Information</th><th>Why we keep it</th><th>How long</th><th>Deleted sooner by</th></tr></thead>
+<tbody>
+<tr><td>A child's optional note on a task submission</td><td>Explains one submission at the moment a parent reviews it</td><td>90 days, then cleared automatically (hourly job)</td><td>Removing the item; deleting the account</td></tr>
+<tr><td>A child's task and reward activity — completions, review submissions, reward claims, help requests</td><td>The product's record: what was done, and the stars and rewards it earned. Two school years keeps year-over-year views whole</td><td>24 months, then deleted automatically (daily job); star balances are preserved</td><td>Deleting the account</td></tr>
+<tr><td>Child profile, tasks, rewards, grades, and the family they belong to</td><td>Needed for as long as the family uses Apparent</td><td>While the family is in use; a family nobody has used for 12 months is deleted in full (daily job) after a best-effort warning about a month before</td><td>Settings → Delete account, immediately</td></tr>
+<tr><td>Parental consent record (who agreed, when, which notice version, and whether our confirming email was delivered)</td><td>Proves permission was given before a child's device connected, and lets you withdraw it</td><td>For the life of the child profile</td><td>Deleting the account</td></tr>
+<tr><td>Parent account, sign-in identity, and household name</td><td>Needed to sign you in and to own the family</td><td>For the life of the account</td><td>Settings → Delete account</td></tr>
+<tr><td>Optional feedback and privacy-scrubbed error reports</td><td>To respond to you and to fix defects</td><td>90 days (hourly job)</td><td>Deleting the account</td></tr>
+<tr><td>Parent notification registration and token</td><td>To route an alert to your device</td><td>90 days from the last refresh, then deactivated; the token is deleted 30 days later</td><td>Signing out; deleting the account</td></tr>
+<tr><td>Infrastructure request and authentication logs (IP address, timing, route)</td><td>Security, abuse prevention, troubleshooting</td><td>The provider's shortest production window; see below</td><td>Not user-deletable; not used for any other purpose</td></tr>
+<tr><td>Routine encrypted database backups</td><td>Recovery from loss</td><td>Until the backups rotate</td><td>Not user-deletable; never used to reverse a deletion</td></tr>
+</tbody></table>
+<p>You control your data. You can permanently delete a parent account from <strong>Settings → Delete account</strong>, or from the setup flow before a family has been created. Deletion removes feedback linked to the account, family membership, and access to Apparent. Every family the deleting parent created — including its children, tasks, rewards, grades, history, and connected-device access — is also deleted from the active service. If the account joined a family created by another parent, that family remains available to its creator and other active members; only the deleting account's membership and account-linked data are removed. Active-service deletion is immediate and cannot be undone through the app.</p>
+<p>A child's optional note on a task submission is automatically deleted after it becomes 90 days old; hourly cleanup means deletion can occur up to about one hour after that point. The note explains one submission at the moment a parent reviews it, so it is kept for far less time than the task record it was attached to. The task and its status history remain; only the child-written text is removed.</p>
+<p>A child's task and reward activity — status changes, completions, review submissions, and reward claims — is automatically deleted after it becomes 24 months old. That window covers two school years, so year-over-year views remain whole, and daily scheduling can add up to about one day at the boundary. Deleting the parent account removes it sooner.</p>
+<p>A family that nobody has used for 12 months is deleted in full, including its children, tasks, rewards, grades, history, and connected-device access. This is the same deletion described above, performed on our side because data nobody has opened in a year is not data we should still be holding.</p>
+<p>About a month before that, we try to email the parent, so the account can be kept simply by opening the app. We say "try" deliberately: email is filtered, forwarded and rewritten by services we do not control, and we have measured our own notices landing in spam. So the message is an attempt to reach you rather than a guarantee, and the deletion does not wait for it to succeed — if it did, an address that no longer works would keep a child's data here indefinitely, which is the opposite of what this section is for.</p>
+<p>"Used" means both: no parent has signed in, <strong>and</strong> nothing in the family has changed. We check both deliberately. Staying signed in is normal — a parent who opens the app every day may not sign in again for months — so measuring sign-in alone would eventually delete families that are being used daily. Requiring both means we always delete later than this window, never earlier.</p>
+<p>Optional feedback and first-party error reports are automatically deleted after they become 90 days old; hourly cleanup means deletion can occur up to about one hour after that point. Deleting the parent account removes its linked feedback sooner. New feedback email alerts contain no user content or account identifiers, so they do not create a second copy of the note.</p>
+<p>A parent notification registration is active for 90 days after its latest successful signed-in refresh. Private daily cleanup then deactivates an expired registration and deletes its notification token after another 30 inactive days; daily scheduling can add up to about one day at each boundary. Signing out or deleting the account can deactivate or remove it sooner. Deleting the token does not require deleting the delivery outcome and its defined relationship to the family's notification history; that history follows the family/account deletion rules above. Arbitrary provider messages and response bodies are not stored in that outcome.</p>
+<p>The separate per-account diagnostic rate-limit counter uses a fixed one-hour window. Its client-inaccessible row is eligible for scheduled deletion roughly 24 hours after the start of its last active window (hourly scheduling can add up to about one more hour), and account deletion removes it sooner.</p>
+<p>A pending, privacy-scrubbed fatal-error record may remain in encrypted device storage until it can be uploaded after sign-in or cleared. The app discards it when it is more than 90 days old. Signing out or deleting the account also attempts to clear stored diagnostics on that device.</p>
+<p>Supabase retains provider-managed request, authentication, and response-timing logs for a limited operational window. We configure those logs for the shortest production-plan window that supports security and reliability, do not export them to a log drain, and disable unnecessary duplicate database audit-log storage. These records are not used for advertising or behavioral analytics.</p>
+<p>Deleted data may remain temporarily in restricted routine database backups until those backups rotate, and account-email delivery records remain under the email provider's limited operational or legally required retention. Backup and provider-log copies are not available in ordinary app operations and are not used to reverse an account deletion.</p>
 <h2>Your choices</h2>
 <ul>
-  <li>Use Sign in with Apple to share less (Apple can hide your real email).</li>
-  <li>Decline or disable notifications (the app still works; you&rsquo;ll see review
-    requests when you open it).</li>
-  <li>Delete your account and data at any time, as above.</li>
+  <li>Use Sign in with Apple to share less (Apple can hide your real email). When an Apple-authenticated parent deletes an account, Apparent requests a fresh Apple authorization, sends its one-time code only to an authenticated server function, verifies that the Apple identity belongs to the signed-in account, and revokes Apple access before deletion. Apparent does not retain Apple authorization codes or tokens. If Apple cleanup fails, deletion pauses for an explicit <strong>Delete anyway</strong> choice and shows manual Apple Account removal instructions.</li>
+  <li>Decline or disable notifications (the app still works; you'll see review requests when you open it).</li>
+  <li>Choose whether to send optional feedback; the form warns against including sensitive family details.</li>
+  <li>Delete your account and active-service data at any time, as above.</li>
 </ul>
-
 <h2>Changes to this policy</h2>
-<p>If we make material changes, we will update this page and the effective date
-above.</p>
-
+<p>If we make material changes, we will update this page and the effective date above.</p>
 <h2>Contact</h2>
-<p>Provider: <strong>Bear Audio LLC</strong><br>
-10089 Quarry Hill Place, Parker, CO 80134, United States<br>
-Telephone: <strong>+1 303-506-2129</strong></p>
-<p>Questions or requests: <a href="mailto:privacy@bear-audio.com"><strong>privacy@bear-audio.com</strong></a></p>
+<p>Provider: <strong>Bear Audio LLC</strong> 10089 Quarry Hill Place, Parker, CO 80134, United States Telephone: <strong>+1 303-506-2129</strong> Questions or requests: <strong>privacy@bear-audio.com</strong></p>
 
-<footer><a href="./">Apparent Family</a> · Privacy Policy</footer>
+<footer><a href="./">Apparent Family</a> · Privacy Policy · Effective September 4, 2026</footer>
 </body>
 </html>
